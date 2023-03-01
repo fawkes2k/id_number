@@ -2,7 +2,7 @@ Creates a PESEL data object from a date of birth and sequence number or PESEL nu
 Create ID number data object (my suggested alternative to PESEL number) from a date of birth and sequence number, ID or PESEL number.<br>
 
 Example for PESEL object:
-```
+```python
 >>> from pesel import *
 >>> str(PESEL(date(2004, 5, 4), 846))
 '04250408463'
@@ -14,7 +14,7 @@ datetime.date(2004, 5, 4)
 ```
 
 Example for ID_Number object:
-```
+```python
 >>> from id_number import *
 >>> str(ID_Number(date(2004, 5, 4), 846))
 '1ll5-nir'
