@@ -1,8 +1,9 @@
 from pesel import *
 from base_converter import BaseConverter
+from string import digits, ascii_lowercase
 
 # Creates a niftimal base converter
-nc = BaseConverter('0123456789abcdefghijklmnopqrstuvwxyz')
+nc = BaseConverter(f'{digits}{ascii_lowercase}')
 
 # Exception
 class WrongIDException(WrongPESELException): pass
