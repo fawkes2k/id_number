@@ -26,12 +26,13 @@ class PESEL():
         :raises IncorrectDataError: if
         :return: Nothing, creates values in objects instead.
         """
+        centuries = {18: 80, 19: 0, 20: 20, 21: 40, 22: 60}
         if date_of_birth < date(1800, 1, 1) or date_of_birth > date(2299, 12, 31): raise IncorrectDataError('Incorrect date of birth')
         if sequential_number < 0 or sequential_number > 10**4 - 1: raise IncorrectDataError('Incorrect sequence number')
         self.__date_of_birth = date_of_birth
         self.__sequential_number = sequential_number
         self.__sex = 'F' if sequential_number % 2 == 0 else 'M'
-        pesel_string = f'{str(date_of_birth.year % 100).zfill(2)}{str(date_of_birth.year // 100 + date_of_birth.month).zfill(2)}' \
+        pesel_string = f'{str(date_of_birth.year % 100).zfill(2)}{str(centuries[date_of_birth.year // 100] + date_of_birth.month).zfill(2)}' \
                        f'{str(date_of_birth.day).zfill(2)}{str(self.__sequential_number).zfill(4)}'
         self.__calculate_checksum(pesel_string)
         self.__pesel_string = f'{pesel_string}{self.__checksum}'
@@ -61,7 +62,8 @@ class PESEL():
         :return: Nothing, creates value "checksum" in object instead.
         """
         weight = (1, 3, 7, 9, 1, 3, 7, 9, 1, 3)
-        self.__checksum = 10 - (sum([int(pesel[i]) * weight[i] for i in range(10)]) % 10)
+        weighted_sum = (sum([int(pesel[i]) * weight[i] for i in range(10)]) % 10)
+        self.__checksum = 0 if weighted_sum == 0 else (10 - weighted_sum)
 
     # Getters
     def __str__(self) -> str: return self.__pesel_string
